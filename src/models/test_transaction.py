@@ -9,6 +9,7 @@ class BankAccount(Base):
 
     account_id = Column(Integer, primary_key=True)
     balance = Column(Float)
+    title = Column(String)
 
 
 class OrderTest(Base):

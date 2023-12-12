@@ -44,7 +44,7 @@ def test_2():
             # order2 = OrderTest(total_amount=5)
             # session.add(order2)
 
-            order1.total_amount -= 50
+            order1.total_amount += 50
             # session.flush()
             session.commit()
             print("Transaction successful")
