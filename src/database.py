@@ -1,14 +1,11 @@
 
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from sqlalchemy import create_engine
-from config import *
+from config import settings
 
 
 # синхронное подключение к бд
-sync_engine = create_engine(
-    url=f"postgresql+psycopg://{DB_USER}:{DB_PASS}@{DB_HOST}:{DB_PORT}/{DB_NAME}",
-    echo=True,
-)
+sync_engine = create_engine(settings.DB_URL)
 
 sync_session = sessionmaker(sync_engine)
 

@@ -17,3 +17,5 @@ class User(Base):
     update_at = Column(DateTime(), server_default=text("TIMEZONE('utc',now())"),
                        onupdate=datetime.utcnow)
     profile = relationship('Profile', uselist=False, back_populates='user')
+    stores = relationship('Store', back_populates='owner')
+    orders = relationship('Order', back_populates='user')

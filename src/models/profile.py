@@ -6,6 +6,7 @@ from sqlalchemy.orm import relationship
 from database import Base
 
 
+
 class StatusUser(enum.Enum):
     buyer = 'buyer'
     seller = 'seller'
@@ -22,5 +23,5 @@ class Profile(Base):
     phone_numder = Column(String(11))
     address = Column(String)
     favorite_product = Column(String)
-    user_id = Column(Integer, ForeignKey('users.id'), unique=True, nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id', ondelete='CASCADE'), unique=True, nullable=False)
     user = relationship('User', back_populates='profile')

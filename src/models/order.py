@@ -23,5 +23,5 @@ class Order(Base):
     update_at = Column(DateTime(), server_default=text("TIMEZONE('utc',now())"),
                        onupdate=datetime.utcnow)
     user = relationship('User', back_populates='orders')
-    products = relationship('Product', secondary='product_category', back_populates='orders')
-    store = relationship('Store', secondary='stores_orders', back_populates='stores')
+    products = relationship('Product', secondary='order_product', back_populates='orders')
+    store = relationship('Store', secondary='stores_orders', back_populates='order')
