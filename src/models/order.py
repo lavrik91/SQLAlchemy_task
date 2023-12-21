@@ -19,6 +19,9 @@ class Order(Base):
     id = Column(Integer, primary_key=True)
     status_order = Column(Enum(StatusOrder), default=StatusOrder.processing, nullable=False)
     user_id = Column(Integer, ForeignKey('users.id'))
+    product_id = Column(Integer, ForeignKey('products.id'))
+    quantity = Column(Integer)
+    store_id = Column(Integer, ForeignKey('stores.id'))
     create_at = Column(DateTime(), server_default=text("TIMEZONE('utc',now())"))
     update_at = Column(DateTime(), server_default=text("TIMEZONE('utc',now())"),
                        onupdate=datetime.utcnow)

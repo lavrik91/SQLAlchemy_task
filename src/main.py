@@ -2,7 +2,8 @@ import asyncio
 import os
 import sys
 from typing import Union
-
+from fastapi import FastAPI
+from rabbitmk_task.routers import router as router_order
 
 
 from sqlalchemy import exc
@@ -10,6 +11,13 @@ from database import sync_session
 
 
 # from models.test_transaction import OrderTest, BankAccount, Customer
+
+
+app = FastAPI()
+
+
+app.include_router(router_order)
+
 
 
 # test transaction

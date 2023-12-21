@@ -1,0 +1,29 @@
+version: '3.8'
+
+volumes:
+  pgdata:
+  rabbitmq:
+
+services:
+
+  postgres:
+    image: postgres:alpine
+    container_name: sqlalchemy
+    restart: always
+    env_file:
+      - .env.dev
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+  rabbitmq:
+    image: "rabbitmq:management"
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
