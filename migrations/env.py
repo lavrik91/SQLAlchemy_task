@@ -1,23 +1,28 @@
+import os
+import sys
 from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
 
 from alembic import context
-from config import settings
-from database import Base
-from models.user import User
-from models.store import Store
-from models.store_order import StoreOrder
-from models.order import Order
-from models.product import Product
-from models.category import Category
-from models.profile import Profile
-from models.product_category import ProductCategory
-from models.order_product import OrderProduct
+
+sys.path.append(os.path.join(sys.path[0], 'src'))
+
+from src.config import settings
+from src.database import Base
+from src.models.user import User
+from src.models.store import Store
+from src.models.store_order import StoreOrder
+from src.models.order import Order
+from src.models.product import Product
+from src.models.category import Category
+from src.models.profile import Profile
+from src.models.product_category import ProductCategory
+from src.models.order_product import OrderProduct
 # from models.test_transaction import BankAccount, OrderTest
 
-
+print(settings.DB_URL)
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config

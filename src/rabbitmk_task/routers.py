@@ -1,15 +1,21 @@
 import pika
 from fastapi import APIRouter
 
+from mock_test_func.func_for_mock import create_user
 from .schemas import CreateOrderSchemas
 
 router = APIRouter()
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+credentials = pika.PlainCredentials('guest', 'guest')
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', credentials=credentials, port=5672))
 channel = connection.channel()
 
 # Очередь для обработки заказов
 channel.queue_declare(queue='process_orders')
+
+@router.get('/create_bd')
+def create_bd():
+    create_user()
 
 
 @router.post('/order')

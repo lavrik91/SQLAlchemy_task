@@ -1,15 +1,16 @@
 
+
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 from sqlalchemy import create_engine
-from config import settings
+from src.config import settings
 
-
-
+print(settings.DB_URL)
 
 # синхронное подключение к бд
 sync_engine = create_engine(settings.DB_URL)
 
 sync_session = sessionmaker(sync_engine)
+
 
 
 class Base(DeclarativeBase):

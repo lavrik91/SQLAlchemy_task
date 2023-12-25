@@ -1,29 +1,53 @@
 version: '3.8'
 
+networks:
+  mynetwork:
+    driver: bridge
+
 volumes:
   pgdata:
-  rabbitmq:
+  rabbitmq_data:
 
 services:
 
   postgres:
-    image: postgres:alpine
-    container_name: sqlalchemy
+    image: postgres:15
+    container_name: postgres_task
     restart: always
     env_file:
       - .env.dev
     volumes:
       - pgdata:/var/lib/postgresql/data/
+    networks:
+      - mynetwork
 
   rabbitmq:
-    image: "rabbitmq:management"
-    hostname: rabbitmq
+    image: rabbitmq:management
+    hostname: rabbit
     restart: always
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest
     volumes:
-      - rabbitmq:/var/lib/rabbitmq
+      - rabbitmq_data:/var/lib/rabbitmq
     ports:
       - "5672:5672"
-      - "15672:15672"
+      - "15555:15672"
+    networks:
+      - mynetwork
+
+  app:
+    build:
+      context: .
+    env_file:
+      - .env
+    container_name: fastapi_app
+    ports:
+      - "9999:8000"
+    depends_on:
+      - rabbitmq
+      - postgres
+
+    command: ["/app/docker/app.sh"]
+    networks:
+      - mynetwork

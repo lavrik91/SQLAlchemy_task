@@ -1,6 +1,6 @@
 import pika
 import json
-from mock_test_func.func_for_mock import create_order, sending_messages, get_user
+from src.mock_test_func.func_for_mock import create_order, sending_messages, get_user
 
 
 def process_order(ch, method, properties, body):
@@ -25,9 +25,12 @@ def process_message(ch, method, properties, body):
     print(f'{post=}')
 
 
+
 def main():
     """Обработка очередей"""
-    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+    credentials = pika.PlainCredentials('guest', 'guest')
+    connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', credentials=credentials, port=5672))
+
     channel = connection.channel()
 
     # Создание очереди для заказов
